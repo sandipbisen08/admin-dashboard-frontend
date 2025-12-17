@@ -17,7 +17,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query';
 import { leaderDetailsApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -103,7 +103,7 @@ const LeaderDetailsPage = () => {
   const isAdmin = user?.role === 'admin';
 
   const backendBaseUrl = useMemo(() => {
-    const apiBase = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+    const apiBase = process.env.REACT_APP_API_URL || 'https://admin-dashboard-backend-blush.vercel.app/api';
     return apiBase.replace(/\/?api\/?$/, '');
   }, []);
 
@@ -112,12 +112,12 @@ const LeaderDetailsPage = () => {
   const [form, setForm] = useState(emptyForm);
   const [formError, setFormError] = useState('');
 
-  const queries = roles.map((r) =>
-    useQuery({
+  const queries = useQueries({
+    queries: roles.map((r) => ({
       queryKey: ['leader-details', r.key],
       queryFn: async () => (await leaderDetailsApi.getByRole(r.key)).data,
-    })
-  );
+    })),
+  });
 
   const anyLoading = queries.some((q) => q.isLoading);
   const anyError = queries.find((q) => q.isError);
@@ -125,10 +125,10 @@ const LeaderDetailsPage = () => {
   const leaderDataByRole = useMemo(() => {
     const out = {};
     roles.forEach((r, idx) => {
-      out[r.key] = queries[idx].data || null;
+      out[r.key] = queries[idx]?.data || null;
     });
     return out;
-  }, [queries.map((q) => q.data).join('|')]);
+  }, [queries]);
 
   const upsertMutation = useMutation({
     mutationFn: async ({ role, payload }) => (await leaderDetailsApi.upsertByRole(role, payload)).data,

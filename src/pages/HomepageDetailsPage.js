@@ -37,7 +37,7 @@ const HomepageDetailsPage = () => {
   const [formError, setFormError] = useState('');
 
   const backendBaseUrl = useMemo(() => {
-    const apiBase = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+    const apiBase = process.env.REACT_APP_API_URL || 'https://admin-dashboard-backend-blush.vercel.app/api';
     return apiBase.replace(/\/?api\/?$/, '');
   }, []);
 
