@@ -101,7 +101,7 @@ const GalleryDetailsPage = () => {
   };
 
   const validate = () => {
-    if (!editingId && (!form.imageFiles || form.imageFiles.length === 0)) return 'Select at least one image';
+    // if (!editingId && (!form.imageFiles || form.imageFiles.length === 0)) return 'Select at least one image';
     if (!form.title.trim()) return 'Title is required';
     if (!form.description.trim()) return 'Description is required';
     return '';

@@ -167,7 +167,7 @@ const LeaderDetailsPage = () => {
 
   const validate = () => {
     const existing = activeRole ? leaderDataByRole[activeRole] : null;
-    if (!existing && !form.imageFile) return 'Image file is required';
+    // if (!existing && !form.imageFile) return 'Image file is required';
     if (!form.name.trim()) return 'Name is required';
     if (!form.description.trim()) return 'Description is required';
     if (!form.phone.trim()) return 'Phone number is required';

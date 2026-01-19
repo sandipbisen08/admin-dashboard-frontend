@@ -100,7 +100,7 @@ const HomepageDetailsPage = () => {
   };
 
   const validate = () => {
-    if (!editingId && !form.imageFile) return 'Image file is required';
+    // if (!editingId && !form.imageFile) return 'Image file is required';
     if (!form.headerTitle.trim()) return 'Header title is required';
     if (!form.headerDesc.trim()) return 'Header description is required';
     return '';

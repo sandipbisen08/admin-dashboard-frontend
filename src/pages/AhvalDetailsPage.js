@@ -100,7 +100,7 @@ const AhvalDetailsPage = () => {
   };
 
   const validate = () => {
-    if (!editingId && !form.imageFile) return 'Image file is required';
+    // if (!editingId && !form.imageFile) return 'Image file is required';
     if (!form.title.trim()) return 'Title is required';
     if (!form.description.trim()) return 'Description is required';
     return '';
