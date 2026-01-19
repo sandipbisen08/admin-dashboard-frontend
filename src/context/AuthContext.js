@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import api from '../services/api';
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     initAuth();
-  }, []);
+  }, [logout]);
 
   // Login user
   const login = async (email, password) => {
@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Logout user
-  const logout = () => {
+  const logout = useCallback(() => {
     // Remove token from localStorage
     localStorage.removeItem('token');
     
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }) => {
     
     // Redirect to login
     navigate('/login');
-  };
+  }, [navigate]);
 
   // Check if user has required role
   const hasRole = (requiredRole) => {
