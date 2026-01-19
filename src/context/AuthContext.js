@@ -13,6 +13,22 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const logout = useCallback(() => {
+    // Remove token from localStorage
+    localStorage.removeItem('token');
+    
+    // Remove token from axios headers
+    delete api.defaults.headers.common['Authorization'];
+    
+    // Reset state
+    setToken('');
+    setUser(null);
+    setIsAuthenticated(false);
+    
+    // Redirect to login
+    navigate('/login');
+  }, [navigate]);
+
   // Set auth token in axios headers and initialize user state
   useEffect(() => {
     const initAuth = async () => {
@@ -100,23 +116,6 @@ export const AuthProvider = ({ children }) => {
       return { success: false, message: errorMessage };
     }
   };
-
-  // Logout user
-  const logout = useCallback(() => {
-    // Remove token from localStorage
-    localStorage.removeItem('token');
-    
-    // Remove token from axios headers
-    delete api.defaults.headers.common['Authorization'];
-    
-    // Reset state
-    setToken('');
-    setUser(null);
-    setIsAuthenticated(false);
-    
-    // Redirect to login
-    navigate('/login');
-  }, [navigate]);
 
   // Check if user has required role
   const hasRole = (requiredRole) => {
